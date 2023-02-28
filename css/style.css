@@ -96,6 +96,8 @@ caption-side: top;
 font-weight: bold;
 background-color: #f5aac8;
 border: #ff005991 2px solid;
+font-size: 0.9rem;
+min-width: 18.2rem;
 }
 th{
 width: 25rem;
@@ -104,27 +106,28 @@ td{
 text-align: center;
 }
 .card_detail{
-width: 100%;
-
+width: auto;
 }
 .card2{
 background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);
 border: #ff0066 2px double;
 border-radius: 10px;
-width: 85%;
+max-width: 1200px;
+margin: 2rem;
 }
 .card2 img{
-border-radius: 10px
-;
+border-radius: 10px;
+
 }
 .card-title2{
 text-align: center;
 color: white;
 }
 .card-text2{
-width: 50%;
-text-align: center;
+width: 100%;
+padding-left: 1rem;
+padding-right: 1rem;
 color: white;
 }
 .section_details{
@@ -132,9 +135,15 @@ background-color: #f5aac8;
 margin: 1rem;
 border-radius: 10px;
 }
+.img_cards{
+height: 180px;
+}
+.card3{
+width: 18rem;
+}
 
 footer{
-min-height: 15vh;
+min-height: 10vh;
 display: flex;
 justify-content: space-around;
 background: rgb(246,205,222);
@@ -150,6 +159,7 @@ margin-bottom: 1rem;
 margin-top: 0.5rem;
 margin-right: 0;
 }
+
 .nav-link{
 text-align: center;
 border-radius: 0;
@@ -160,7 +170,24 @@ border-bottom: 1px solid rgb(226, 43, 183);
 margin-top: 0.5rem;
 }
 }
-@media only screen and (max-width: 587px){
+@media only screen and (min-width: 593px) and (max-width: 992px){
+.card2{
+min-width: 35rem;
+margin: 1rem;
+}
+}
+@media only screen and (min-width: 375px) and (max-width: 592px){
+.card2{
+min-width: 20rem;
+margin: 0.5rem;
+}
+}
 
-
+@media only screen and (max-width: 374px){
+.card-text2{
+font-size: 1.2rem;
+}
+.card2{
+max-width: 18rem;
+}
 }
