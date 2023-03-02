@@ -83,7 +83,7 @@ min-height: 70vh;
 
 }
 .main_details{
-min-height: 80vh;
+min-height: 82vh;
 background: rgb(255,124,192);
 background: linear-gradient(0deg, rgba(255,124,192,0.7228641456582633) 0%, rgba(255,255,255,1) 40%);
 }
@@ -143,7 +143,7 @@ width: 18rem;
 }
 
 footer{
-min-height: 10vh;
+min-height: 9.7vh;
 display: flex;
 justify-content: space-around;
 background: rgb(246,205,222);
