@@ -141,7 +141,9 @@ height: 180px;
 .card3{
 width: 18rem;
 }
-
+.form-check-input{
+cursor: pointer;
+}
 footer{
 min-height: 9.7vh;
 display: flex;
