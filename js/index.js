@@ -1,13 +1,28 @@
 const $ = selector => document.querySelector(selector);
-//Obterner las referencias de los elementos
+//Obtener las referencias de los elementos
 const $container_checkbox = $('#checkbox_container');
 const $container_cards = $('#container_cards');
 const $container_search = $('#form_search')
-const cards = data.events; 
 //agregar eventos
 
-$container_checkbox.addEventListener('change', e => addCards(filterChecks(cards), $container_cards));
-$container_checkbox.addEventListener('change', e => addCards(crossFilter(), $container_cards));
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+    .then(Response => Response.json())
+    .then(cards => {
+        addCards(cards.events, $container_cards)
+        $container_checkbox.addEventListener('change', e =>
+        addCards(crossFilter(cards.events), $container_cards))
+        $container_search.addEventListener("input", e =>
+        addCards(crossFilter(cards.events), $container_cards))
+        const listCategory = Array.from(new Set(cards.events.map(card => card.category)));
+        const categories = listCategory.reduce((acc, category) => {
+            return acc += `<div class="form-check me-3">
+                <input class="form-check-input" type="checkbox" value="${category}" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">${category}</label></div>`
+        }, '')
+        $container_checkbox.innerHTML += categories
+    })
+    .catch(error => console.log(error));
+
 function filterChecks(listCards){
     let chosen = [];
     const checkboxChecked = document.querySelectorAll('input[type="checkbox"]:checked')
@@ -19,7 +34,6 @@ function filterChecks(listCards){
         return listCards.filter(card => chosen.includes(card.category))
     }
 }
-filterChecks(cards);
 
 function createCard (events){
     return `<div class="card card3">
@@ -34,6 +48,7 @@ function createCard (events){
     </section>
     </div>` 
 }
+
 function message (){
     return `<h2>There are no events matching your search</h2>`
 }
@@ -48,10 +63,6 @@ function addCards(listCards, element){
     }
 };
 
-addCards(cards,$container_cards);
-
-$container_search.addEventListener('input', e => addCards(crossFilter(cards),$container_cards));
-
 function filterSearch(values){
     const search = $container_search.value.toLowerCase()
     if(search.length === 0){
@@ -61,8 +72,7 @@ function filterSearch(values){
         return events.name.toLowerCase().includes(search)})
     return searchFilter;
 }
-filterSearch(cards);
 
-function crossFilter(){
-    return filterChecks(filterSearch(cards, $container_search.value));
+function crossFilter(cards){
+    return filterChecks(filterSearch(cards));
 }

@@ -2,16 +2,33 @@ const $ = selector => document.querySelector(selector);
 //Obterner las referencias de los elementos
 const $container_checkbox = $('#checkbox_container');
 const $container_cards = $('#container_cards');
-const $container_search = $('#form_search')
-const cards = data.events; 
+const $container_search = $('#form_search');
 
 //agregar eventos
-function filterCards(list){ 
-    const current = data.currentDate
-    let filters= list.filter(card=> card.date > current )
-    return filters
-};
-const eventsUpcoming = filterCards(cards);
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+    .then(Response => Response.json())
+    .then(cards => {
+        function filterCards(list){ 
+            const current = cards.currentDate
+            let filters= list.filter(card=> card.date > current )
+            return filters
+        };
+        const eventsUpcoming = filterCards(cards.events);
+        addCards(eventsUpcoming, $container_cards)
+        $container_checkbox.addEventListener('change', e =>
+        addCards(crossFilter(eventsUpcoming), $container_cards))
+        $container_search.addEventListener("input", e =>
+        addCards(crossFilter(eventsUpcoming), $container_cards))
+        const listCategory = Array.from(new Set(cards.events.map(card => card.category)));
+        const categories = listCategory.reduce((acc, category) => {
+            return acc += `<div class="form-check me-3">
+                <input class="form-check-input" type="checkbox" value="${category}" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">${category}</label></div>`
+        }, '')
+        $container_checkbox.innerHTML += categories
+    })
+    .catch(error => console.log(error));
+
 
 function createCard (events){
     return `<div class="card card3">
@@ -40,10 +57,7 @@ function addCards(listCards, element){
         element.innerHTML = template
     }
 };
-addCards(eventsUpcoming,$container_cards)
 
-$container_checkbox.addEventListener('change', e => addCards(filterChecks(eventsUpcoming), $container_cards));
-$container_checkbox.addEventListener('change', e => addCards(crossFilter(), $container_cards));
 function filterChecks(listCards){
     let chosen = [];
     const checkboxChecked = document.querySelectorAll('input[type="checkbox"]:checked')
@@ -55,9 +69,7 @@ function filterChecks(listCards){
         return listCards.filter(card => chosen.includes(card.category))
     }
 }
-filterChecks(eventsUpcoming);
 
-$container_search.addEventListener('input', e => addCards(crossFilter(eventsUpcoming),$container_cards));
 
 function filterSearch(values){
     const search = $container_search.value.toLowerCase()
@@ -68,8 +80,7 @@ function filterSearch(values){
         return events.name.toLowerCase().includes(search)})
     return searchFilter;
 }
-filterSearch(eventsUpcoming);
 
-function crossFilter(){
-    return filterChecks(filterSearch(eventsUpcoming, $container_search.value));
+function crossFilter(eventsUpcoming){
+    return filterChecks(filterSearch(eventsUpcoming));
 }

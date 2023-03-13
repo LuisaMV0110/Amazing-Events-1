@@ -108,6 +108,9 @@ text-align: center;
 .card_detail{
 width: auto;
 }
+.img_details{
+width: 30rem;
+}
 .card2{
 background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);
