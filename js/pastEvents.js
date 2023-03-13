@@ -42,8 +42,16 @@ function addCards(listCards, element){
 };
 addCards(eventsPast,$container_cards)
 
-$container_checkbox.addEventListener('change', e => addCards(filterChecks(eventsPast), $container_cards));
-$container_checkbox.addEventListener('change', e => addCards(crossFilter(), $container_cards));
+const listCategory = Array.from(new Set(cards.map(card => card.category)));
+const categories = listCategory.reduce((acc,category) => {
+    return acc += `<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="${category}" id="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault">${category}</label></div>`
+}, '')
+
+$container_checkbox.innerHTML += categories;
+
+$container_checkbox.addEventListener('change', e => addCards(crossFilter(eventsPast), $container_cards));
 function filterChecks(listCards){
     let chosen = [];
     const checkboxChecked = document.querySelectorAll('input[type="checkbox"]:checked')
@@ -71,5 +79,5 @@ function filterSearch(values){
 filterSearch(eventsPast);
 
 function crossFilter(){
-    return filterChecks(filterSearch(eventsPast, $container_search.value));
+    return filterChecks(filterSearch(eventsPast));
 }

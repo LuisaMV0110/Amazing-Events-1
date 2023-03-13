@@ -1,16 +1,21 @@
-const container = document.getElementById('detail_card');
+const $container_details = document.getElementById("detail_card");
 
-const params = new URLSearchParams(location.search);
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+    .then((Response) => Response.json())
+    .then((cards) => {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    const card = cards.events.find((element) => element._id == id);
+    renderDetail(card, $container_details);
+    createDetail(card)
+})
+    .catch(console.log("error"));
 
-const id = params.get('id');
-
-let detail = data.events.find(element => element._id === id);
-
-function createDetail(obj){
-    return`<div class="card2">
+function createDetail(obj) {
+return `<div class="card2">
     <div class="row g-0">
         <div class="col-md-12 col-lg-6 d-flex align-items-center p-3">
-        <img src="${obj.image}" class="img-fluid rounded-start" alt="...">
+        <img src="${obj.image}" class="img-fluid rounded-start img_details" alt="...">
         </div>
         <div class="col-md-12 col-lg-6 d-flex justify-content-center">
         <section class="card-body d-flex flex-column 
@@ -21,17 +26,20 @@ function createDetail(obj){
         <h5 class="card-text2">Category: ${obj.category}</h5>
         <h5 class="card-text2">Place: ${obj.place} </h5>
         <h5 class="card-text2">Capacity: ${obj.capacity}</h5>
-        <h5 class="card-text2">${obj.assistance ? 'Assistence: ' + obj.assistance : 'Estimate: ' + obj.estimate}</h5>
-        <h5 class="card-text2">Price: ${obj.price}</h5>
+        <h5 class="card-text2">${
+        obj.assistance
+            ? "Assistence: " + obj.assistance
+            : "Estimate: " + obj.estimate
+        }</h5>
+        <h5 class="card-text2">Price: ${obj.price} usd</h5>
         </section>
         </div>
     </div>
-</div>`
+</div>`;
 }
 
-function renderDetail(obj,element){
-    let template = ''
-    template += createDetail(obj)
-    element.innerHTML =template
+function renderDetail(obj, element) {
+    let template = "";
+    template += createDetail(obj);
+    element.innerHTML = template;
 }
-renderDetail(detail, container);
