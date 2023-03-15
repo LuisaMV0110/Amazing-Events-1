@@ -1,5 +1,5 @@
 const $ = selector => document.querySelector(selector);
-
+//.....................................................
 const $highestPercent = $('#highestPercent');
 const $lowestPercent = $('#lowestPercent');
 const $largerCapacity = $('#largerCapacity');
@@ -26,7 +26,7 @@ const $table3 = $('#table_3');
         const eventHighestAttendance = dataEvents.events = result.slice(-1);
         const eventLowestAttendance = dataEvents.events = result.slice(0, 1);
         function assistance(obj, element) {
-            let percent = ((obj.assistance/obj.capacity)*100).toFixed(2)
+            let percent = Number((obj.assistance/obj.capacity)*100).toFixed(1)
                     element.innerHTML = obj.name + ` ${percent}%`}
         function assistance2(obj, element){
             let capacity = obj.capacity
@@ -54,14 +54,14 @@ const $table3 = $('#table_3');
             const price = categories[category].price;
             const estimated = categories[category].estimate;
             const capacity = categories[category].capacity;
-            let valuePercent = ((estimated * 100) / capacity).toFixed(2);
+            let valuePercent = Number((estimated * 100) / capacity).toFixed(1);
             let template = () => {
                 return `                    
                 <tr>
                 <td>${category}</td>
                 <td>${price}</td>
                 <td>${valuePercent}%</td>
-            </tr>`
+                </tr>`
             };
             table += template();
         }
@@ -85,7 +85,7 @@ const $table3 = $('#table_3');
             const price2 = categories2[category].price;
             const attendance = categories2[category].assistance;
             const capacity2 = categories2[category].capacity;
-            let valuePercent2 = ((attendance * 100) / capacity2).toFixed(2);
+            let valuePercent2 = Number((attendance * 100) / capacity2).toFixed(1);
             let template2 = () => {
                 return `                    
                 <tr>
