@@ -16,8 +16,11 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         const listCategory = Array.from(new Set(cards.events.map(card => card.category)));
         const categories = listCategory.reduce((acc, category) => {
             return acc += `<div class="form-check me-3">
-                <input class="form-check-input" type="checkbox" value="${category}" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">${category}</label></div>`
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="${category}">
+            ${category}
+            </label>
+            </div>`
         }, '')
         $container_checkbox.innerHTML += categories
     })
